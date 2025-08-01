@@ -1,35 +1,36 @@
 #!/usr/bin/env python3
 
 import requests
-import config
+import redis
 import json
 from datetime import datetime
-import redis
+import config
 
 def send(message):
+    print("Sending message")
     r = redis.Redis(host=config.host, 
                     port=config.port)#, 
                     #db=0)
 
-    r.publish(config.canal, message)
+    r.publish(config.channel, message)
 
 def main():
-    licitaciones = requests.get(config.url_licitaciones)
-
-    lic = {}
+    print("Initializing getter service")           
+    tenders = requests.get(config.url_tenders)
 
     for i in range(5):
-        url = config.url_porCodigo(licitaciones.json()['Listado'][i]['CodigoExterno'])
-        licitacion = requests.get(url).json()['Listado'][1]
+
+        url = config.url_by_code(tenders.json()['Listado'][i]['CodigoExterno'])
+        tender = requests.get(url).json()['Listado'][0]
 
         message= {
             'id': i,
             'status': "pre-processed",
             'createdAt': datetime.now().strftime('%Y-%m-%d'),
             'payload':{
-                'codigo':licitacion['CodigoExterno'],
-                'title': licitacion['Nombre'],
-                'description': licitacion['Descripcion']
+                'code':tender['CodigoExterno'],
+                'title': tender['Nombre'],
+                'description': tender['Descripcion']
             }
         }
 

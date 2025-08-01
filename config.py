@@ -1,12 +1,14 @@
 
-host = 'localhost'
-port = 6379
+import os
 
-canal = 'canal'
+host = os.getenv('REDIS_HOST')
+port = int(os.getenv('REDIS_PORT'))
 
-token   = "9DA9DC04-8AD4-4D65-AF30-3683E6194905"
-url_licitaciones = f"https://api.mercadopublico.cl/servicios/v1/publico/licitaciones.json?fecha=28072025&ticket={token}&estado=activas"
+channel = 'messages'
 
-def url_porCodigo(codigo):
-    return f"https://api.mercadopublico.cl/servicios/v1/publico/licitaciones.json?codigo={codigo}&ticket={token}"
+token   = os.getenv('API_KEY_MERCADO_PUBLICO')
+url_tenders = f"https://api.mercadopublico.cl/servicios/v1/publico/licitaciones.json?fecha=28072025&ticket={token}&estado=activas"
+
+def url_by_code(code):
+    return f"https://api.mercadopublico.cl/servicios/v1/publico/licitaciones.json?codigo={code}&ticket={token}"
 

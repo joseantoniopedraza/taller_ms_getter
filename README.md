@@ -1,43 +1,36 @@
-# Proyecto Python con Docker - Hola Mundo
+# Taller MS Getter
 
-Este es un proyecto simple de Python containerizado con Docker que imprime "Hola mundo".
+Microservicio que obtiene licitaciones de la API de Mercado Público y las publica en Redis.
 
-## Estructura del proyecto
+## Docker
 
-```
-taller_ms_processor/
-├── app.py          # Aplicación principal
-├── Dockerfile      # Configuración de Docker
-├── requirements.txt # Dependencias (vacío en este caso)
-├── .dockerignore   # Archivos a ignorar en Docker
-└── README.md       # Este archivo
-```
+### Construir la imagen
 
-## Cómo ejecutar
-
-### Opción 1: Con Docker (recomendado)
-
-1. Construir la imagen Docker:
 ```bash
-docker build -t hola-mundo .
+docker build -t taller_ms_getter .
 ```
 
-2. Ejecutar el contenedor:
+### Ejecutar el contenedor
+
 ```bash
-docker run hola-mundo
+docker run --rm -e REDIS_HOST=redis -e REDIS_PORT=6379 taller_ms_getter
 ```
 
-### Opción 2: Localmente con Python
+### Usar con Docker Compose
 
-1. Asegúrate de tener Python 3.11+ instalado
-2. Ejecuta la aplicación:
+El servicio ya está configurado en el `docker-compose.yml` principal. Para ejecutarlo:
+
 ```bash
-python app.py
+docker-compose up taller_ms_getter
 ```
 
-## Resultado esperado
+## Variables de entorno
 
-Al ejecutar cualquiera de los comandos anteriores, deberías ver:
-```
-Hola mundo
-``` 
+- `REDIS_HOST`: Host de Redis (por defecto: localhost)
+- `REDIS_PORT`: Puerto de Redis (por defecto: 6379)
+
+## Dependencias
+
+- Python 3.11
+- redis[hiredis]
+- requests 

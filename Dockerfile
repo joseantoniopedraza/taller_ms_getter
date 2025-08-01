@@ -1,11 +1,20 @@
-# Usar la imagen oficial de Python
+# Use Python 3.11 slim image as base
 FROM python:3.11-slim
 
-# Establecer el directorio de trabajo
+# Set working directory
 WORKDIR /app
 
-# Copiar el archivo de la aplicación
-COPY app.py .
+# Copy requirements first for better caching
+COPY requirements.txt .
 
-# Ejecutar la aplicación
+# Install dependencies
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy application code
+COPY . .
+
+# Make app.py executable
+RUN chmod +x app.py
+
+# Run the application
 CMD ["python", "app.py"] 
