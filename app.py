@@ -58,7 +58,7 @@ def main():
         
         # Get tenders list
         tenders_data = make_request(config.url_tenders, "tenders list")
-        
+            
         if not tenders_data or 'Listado' not in tenders_data:
             logger.error("Invalid response format: 'Listado' not found in tenders data")
             sys.exit(1)
