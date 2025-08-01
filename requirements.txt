@@ -1,2 +1,6 @@
 redis[hiredis]
 requests
+pytest
+pytest-mock
+pytest-cov
+responses
