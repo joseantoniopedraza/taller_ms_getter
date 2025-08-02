@@ -16,5 +16,6 @@ COPY . .
 # Make app.py executable
 RUN chmod +x app.py
 
+
 # Run the application
 CMD ["python", "app.py"] 
