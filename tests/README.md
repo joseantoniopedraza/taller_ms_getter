@@ -1,110 +1,123 @@
-# Tests for Getter Service
+# Pruebas para el Servicio Getter
 
-This directory contains comprehensive tests for the `app.py` file in the getter service.
+Este directorio contiene pruebas completas para el archivo `app.py` del servicio getter.
 
-## Test Structure
+---
 
-- `test_app.py` - Main test file with unit and integration tests
-- `conftest.py` - Pytest configuration and fixtures
-- `README.md` - This documentation file
+## Estructura de Pruebas
 
-## Test Categories
+- `test_app.py` – Archivo principal de pruebas con tests unitarios e integrados
+- `conftest.py` – Configuración de Pytest y *fixtures*
+- `README.md` – Este archivo de documentación
 
-### Unit Tests
-- **TestSendFunction**: Tests for the `send()` function
-  - Success case
-  - Redis error handling
-  - Unexpected error handling
+---
 
-- **TestMakeRequestFunction**: Tests for the `make_request()` function
-  - Successful HTTP requests
-  - HTTP error handling
-  - JSON decode error handling
-  - Unexpected error handling
+## Categorías de Pruebas
 
-- **TestMainFunction**: Tests for the `main()` function
-  - Successful execution
-  - Invalid response handling
-  - Empty tenders list
-  - Individual tender error handling
-  - Critical error handling
+### Pruebas Unitarias
 
-### Integration Tests
-- **TestIntegration**: End-to-end workflow tests
-  - Complete workflow from API calls to Redis publishing
+- **TestSendFunction**: Pruebas para la función `send()`
+  - Caso exitoso
+  - Manejo de errores de Redis
+  - Manejo de errores inesperados
 
-## Running Tests
+- **TestMakeRequestFunction**: Pruebas para la función `make_request()`
+  - Solicitudes HTTP exitosas
+  - Manejo de errores HTTP
+  - Manejo de errores de decodificación JSON
+  - Manejo de errores inesperados
 
-### Prerequisites
-Install test dependencies:
+- **TestMainFunction**: Pruebas para la función `main()`
+  - Ejecución exitosa
+  - Manejo de respuestas inválidas
+  - Lista de licitaciones vacía
+  - Manejo de errores en licitaciones individuales
+  - Manejo de errores críticos
+
+---
+
+### Pruebas de Integración
+
+- **TestIntegration**: Pruebas de flujo de trabajo de extremo a extremo
+  - Flujo completo desde llamadas a la API hasta publicación en Redis
+
+---
+
+## Ejecución de Pruebas
+
+### Requisitos Previos
+
+Instalar las dependencias de prueba:
+
 ```bash
 pip install -r requirements.txt
 ```
 
-### Run all tests with coverage
+### Ejecutar todas las pruebas con cobertura
 ```bash
 python run_tests.py
 ```
 
-### Run tests in fast mode (no coverage)
+### Ejecutar en modo rápido (sin cobertura)
 ```bash
 python run_tests.py --fast
 ```
 
-### Run tests with pytest directly
+### Ejecutar con `pytest` directamente
 ```bash
-# Run all tests
+# Ejecutar todas las pruebas
 pytest
 
-# Run with coverage
+# Ejecutar con reporte de cobertura
 pytest --cov=app --cov-report=html
 
-# Run specific test class
+# Ejecutar una clase de prueba específica
 pytest tests/test_app.py::TestSendFunction
 
-# Run specific test method
+# Ejecutar un método de prueba específico
 pytest tests/test_app.py::TestSendFunction::test_send_success
 ```
 
-### Run tests by category
+###  Ejecutar pruebas por categoría
 ```bash
-# Run only unit tests
+# Solo pruebas unitarias
 pytest -m unit
 
-# Run only integration tests
+# Solo pruebas de integración
 pytest -m integration
 ```
 
-## Test Coverage
+## Cobertura de Pruebas
 
-The tests cover:
-- ✅ All public functions (`send`, `make_request`, `main`)
-- ✅ Success scenarios
-- ✅ Error handling for all major error types
-- ✅ Edge cases (empty responses, invalid data)
-- ✅ Integration workflows
-- ✅ Logging behavior (disabled during tests)
+Las pruebas cubren:
+- ✅ Todas las funciones públicas (`send`, `make_request`, `main`)
+- ✅ Escenarios exitosos
+- ✅ Manejo de errores para todos los tipos principales
+- ✅ Casos límite (respuestas vacías, datos inválidos)
+- ✅ Flujos de integración completos
+- ✅  Comportamiento del registro (logging, deshabilitado durante las pruebas)
 
-## Test Data
+## Datos de Prueba
 
-The tests use mocked data that simulates the real API responses:
-- Tenders list with multiple entries
-- Individual tender details
-- Expected message structure for Redis publishing
+Las pruebas utilizan datos simulados que imitan las respuestas reales de la API:
 
-## Mocking Strategy
+-Lista de licitaciones con múltiples entradas
+-Detalles individuales de licitaciones
+-Estructura de mensajes esperada para la publicación en Redis
 
-- **Redis**: Mocked to avoid requiring a real Redis instance
-- **HTTP Requests**: Mocked to avoid external API calls
-- **Configuration**: Environment variables set for testing
-- **Logging**: Disabled during tests to avoid cluttered output
+## Estrategia de Mocking
 
-## Adding New Tests
+- **Redis**: Simulado para evitar requerir una instancia real
+- **Solicitudes HTTP**: Simuladas para evitar llamadas reales a la API externa
+- **Configuración**: Variables de entorno configuradas para testing
+- **Logging**: Desactivado durante las pruebas para evitar ruido en la salida
 
-When adding new functionality to `app.py`:
+## Agregar Nuevas Pruebas
 
-1. Add corresponding test methods to the appropriate test class
-2. Use the existing fixtures from `conftest.py`
-3. Follow the Arrange-Act-Assert pattern
-4. Test both success and error scenarios
-5. Update this README if adding new test categories 
+Cuando se agregue nueva funcionalidad en `app.py`:
+
+1. Agregar métodos de prueba correspondientes en la clase adecuada
+2. Usar fixtures existentes desde conftest.py
+3. Seguir el patrón Arrange–Act–Assert
+4. Probar tanto escenarios exitosos como fallidos
+5. Actualizar este README si se agregan nuevas categorías de pruebas

@@ -1,90 +1,105 @@
-# Getter Service
+# Documentación de Taller MS Getter
 
-This service fetches tender data from the Mercado Público API and publishes messages to Redis.
+Este servicio obtiene datos de licitaciones desde la API de Mercado Público y publica mensajes en Redis.
+Encargado de centralizar y distribuir la información para su posterior procesamiento.
 
-## Features
+## Funcionalidades
 
-- Fetches tender data from Mercado Público API
-- Publishes messages to Redis for further processing
-- Comprehensive error handling and logging
-- Resilient HTTP requests with timeout handling
+- Obtiene datos de licitaciones desde la API de Mercado Público
+- Publica mensajes en Redis para procesamiento posterior
+- Manejo de errores y registros detallados
+- Solicitudes HTTP resilientes con manejo de tiempo de espera (timeout)
 
-## Configuration
+## Configuración
 
-Set the following environment variables:
+Configura las siguientes variables de entorno:
 
-- `REDIS_HOST`: Redis server host (default: localhost)
-- `REDIS_PORT`: Redis server port (default: 6379)
-- `API_KEY_MERCADO_PUBLICO`: API key for Mercado Público
+- `REDIS_HOST`: Dirección del servidor Redis
+- `REDIS_PORT`: Puerto del servidor Redis
+- `API_KEY_MERCADO_PUBLICO`: Clave de API para Mercado Público
 
-## Installation
+## Instalación
 
 ```bash
 pip install -r requirements.txt
 ```
+## Automatizaciones
 
-## Usage
+Esta plantilla posee automatizaciones en base al uso de archivos Makefile.
+
+Estos archivo automatizan tareas comunes para el desarrollo y mantenimiento del proyecto. Cada comando puede ejecutarse con make <comando> desde la terminal.
+
+### Calidad y seguridad de código
+- precommit: ejecuta herramientas de formateo y chequeo de calidad:
+
+    - **black**: formatea el código.
+    - **ruff**: verifica estilo y errores, en caso de que encuentre, los corrige
+
+
+## Uso
 
 ```bash
 python app.py
 ```
 
-## Testing
+## Pruebas
 
-### Prerequisites
+### Requisitos previos
 
 Install test dependencies:
 ```bash
 pip install -r requirements.txt
 ```
 
-### Quick Test (No Dependencies Required)
+### Prueba rápida (sin dependencias adicionales)
 
-Run a basic structure test:
+Ejecutar una prueba básica de estructura:
 ```bash
 python test_simple.py
 ```
 
-### Full Test Suite (Requires pytest)
+### Conjunto completo de pruebas (requiere pytest)
 
-Install pytest and run the full test suite:
+Instalar pytest y ejecutar todas las pruebas:
 ```bash
-# Install pytest if not already installed
+# Instalar pytest si no está instalado
 pip install pytest pytest-mock pytest-cov responses
 
-# Run all tests with coverage
+# Ejecutar todas las pruebas con reporte de cobertura
 python run_tests.py
 
-# Run tests in fast mode (no coverage)
+# Ejecutar pruebas en modo rápido (sin cobertura)
 python run_tests.py --fast
 
-# Run with pytest directly
+# Ejecutar directamente con pytest
 pytest tests/ -v
 ```
 
-### Test Coverage
+### Cobertura de pruebas
 
-The test suite includes:
-- Unit tests for all functions
-- Integration tests for complete workflows
-- Error handling tests
-- Mocked external dependencies
+El conjunto de pruebas incluye:
 
-See `tests/README.md` for detailed test documentation.
+- Pruebas unitarias para todas las funciones
+- Pruebas de integración para flujos completos
+- Pruebas de manejo de errores
+- Simulación de dependencias externas (mocking)
+
+Consulta `tests/README.md` para documentación detallada de las pruebas.
 
 ## Docker
 
-Build and run with Docker:
+Compilar y ejecutar con Docker:
 
 ```bash
 docker build -t getter-service .
-docker run -e REDIS_HOST=your-redis-host -e API_KEY_MERCADO_PUBLICO=your-key getter-service
+docker run -e REDIS_HOST=<host-redis> -e API_KEY_MERCADO_PUBLICO=<api-key> getter-service
 ```
 
-## Logging
+## Registro (Logging)
 
-The service logs to both console and file (`getter_service.log`) with detailed information about:
-- Request attempts and responses
-- Redis operations
-- Error conditions and stack traces
-- Processing progress 
+El servicio genera registros tanto en consola como en archivo (getter_service.log) con información detallada sobre:
+
+- Intentos y respuestas de solicitudes HTTP
+- Operaciones con Redis
+- Condiciones de error y trazas de pila
+- Progreso del procesamiento

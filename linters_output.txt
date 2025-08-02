@@ -1,0 +1,6 @@
+black .
+All done! ✨ 🍰 ✨
+7 files left unchanged.
+
+ruff check . --fix
+All checks passed!
